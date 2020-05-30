@@ -1,26 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import "./App.css";
+import Timer from "./components/Timer/Timer.component";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	const [running, runningSet] = useState(false);
+	const [tomatoCount, tomatoCountSet] = useState(0);
+
+	useEffect(() => {
+		let getObj = JSON.parse(localStorage.getItem("tomatoObj"));
+		if (getObj !== null) {
+			// console.log(getObj);
+			tomatoCountSet(getObj);
+		}
+	}, []);
+
+	return (
+		<div className="App bg-gray-100 mt-5">
+			<Timer
+				running={running}
+				runningSet={runningSet}
+				tomatoCount={tomatoCount}
+				tomatoCountSet={tomatoCountSet}
+			/>
+		</div>
+	);
 }
 
 export default App;
