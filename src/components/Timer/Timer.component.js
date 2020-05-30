@@ -10,13 +10,14 @@ export default class Timer extends Component {
 	handleStopStart = () => {
 		if (this.props.running) {
 			this.props.runningSet(false);
+			clearInterval(this.interv);
 		} else if (!this.props.running && this.timeValue >= 0) {
 			this.props.runningSet(true);
 			this.timer(this.timeValue);
 			// we don't want to wait a full second before the timer starts
 
 			this.timer.timer();
-			const interv = setInterval(this.timer.timer, 1000);
+			this.interv = setInterval(this.timer.timer, 1000);
 		}
 	};
 	timer = (duration) => {
