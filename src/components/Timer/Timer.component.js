@@ -21,6 +21,16 @@ export default class Timer extends Component {
 			this.interv = setInterval(this.timer.timer, 1000);
 		}
 	};
+	handleMinutesChange = () => {
+		const minutes = Number(document.querySelector("#outlined-basic").value);
+		if (!this.props.running && minutes >= 1) {
+			console.log(minutes);
+			this.timeValue = minutes * 60;
+			this.timeString = minutes + ":00";
+
+			this.setState({ time: minutes, formatted_time: minutes + ":00" });
+		}
+	};
 	handleReset = () => {
 		this.props.runningSet(false);
 		clearInterval(this.interv);
@@ -69,7 +79,7 @@ export default class Timer extends Component {
 			<div className="mx-auto text-center">
 				<h1 id="timer">{this.state.formatted_time}</h1>
 				<div className="flex justify-center">
-					<TextFieldOutlined />
+					<TextFieldOutlined handleMinutesChange={this.handleMinutesChange} />
 
 					<Checkbox />
 				</div>
@@ -87,6 +97,9 @@ export default class Timer extends Component {
 						Reset
 					</button>
 				</div>
+				<h2 className="my-8 text-4xl">
+					Tomato count: {this.props.tomatoCount}
+				</h2>
 			</div>
 		);
 	}
