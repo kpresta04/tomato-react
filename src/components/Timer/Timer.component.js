@@ -3,24 +3,28 @@ import React, { Component } from "react";
 export default class Timer extends Component {
 	constructor(props) {
 		super(props);
-		this.state = { time: 25 };
-		this.timeString = this.state.time + ":00";
 		this.timeValue = 25 * 60;
+		this.state = { time: 25, formatted_time: "25:00" };
+		this.timeString = this.state.time + ":00";
 	}
 	handleStopStart = () => {
 		if (this.props.running) {
 			this.props.runningSet(false);
-		} else {
+		} else if (!this.props.running && this.timeValue >= 0) {
 			this.props.runningSet(true);
-			console.log("start");
+			this.timer(this.timeValue);
+			// we don't want to wait a full second before the timer starts
+
+			this.timer.timer();
+			const interv = setInterval(this.timer.timer, 1000);
 		}
 	};
-	timer(duration, display) {
+	timer = (duration) => {
 		let start = Date.now(),
 			diff,
 			minutes,
 			seconds;
-		function timer() {
+		const timer = () => {
 			// get the number of seconds that have elapsed since
 			// startTimer() was called
 			diff = duration - (((Date.now() - start) / 1000) | 0);
@@ -35,7 +39,7 @@ export default class Timer extends Component {
 
 			let formatted_time = minutes + ":" + seconds;
 
-			display.textContent = formatted_time;
+			this.setState({ formatted_time });
 			document.title = `Tomato Tracker! ${formatted_time}`;
 			if (this.timeValue === -1) {
 				this.onCompletion();
@@ -46,15 +50,15 @@ export default class Timer extends Component {
 				// example 05:00 not 04:59
 				start = Date.now() + 1000;
 			}
-		}
-		this.Timer.timer = timer;
-	}
+		};
+		this.timer.timer = timer;
+	};
 	render() {
 		// 		const [time, timeSet] = useState(25);
 
 		return (
 			<div className="mx-auto text-center">
-				<h1 id="timer">{this.timeString}</h1>
+				<h1 id="timer">{this.state.formatted_time}</h1>
 				<div id="buttons" className="mt-12">
 					<button
 						onClick={this.handleStopStart}
