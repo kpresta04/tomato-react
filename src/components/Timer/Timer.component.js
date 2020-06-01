@@ -4,10 +4,19 @@ import TextFieldOutlined from "../TextField/TextField.component";
 export default class Timer extends Component {
 	constructor(props) {
 		super(props);
-		this.state = { time: 25, formatted_time: "25:00" };
+		this.state = { time: 25, formatted_time: "25:00", tomatoArray: [] };
 		this.timeValue = this.state.time * 60;
 		this.timeString = this.state.time + ":00";
 	}
+	componentDidUpdate = () => {
+		let indexArray = [];
+		for (let i = 0; i < this.props.tomatoCount; i++) {
+			indexArray.push(i);
+		}
+		if (indexArray.length > this.state.tomatoArray.length) {
+			this.setState({ tomatoArray: indexArray });
+		}
+	};
 	handleStopStart = () => {
 		if (this.props.running) {
 			this.props.runningSet(false);
@@ -49,7 +58,15 @@ export default class Timer extends Component {
 	onCompletion = () => {
 		this.playSound();
 		this.stopTimer();
-		this.props.tomatoCountSet((this.props.tomatoCount += 1));
+		const count = this.props.tomatoCount + 1;
+		localStorage.setItem("tomatoObj", JSON.stringify(count));
+
+		this.props.tomatoCountSet(count);
+
+		if (document.querySelector("#auto-restart").checked) {
+			this.handleReset();
+			this.handleStopStart();
+		}
 	};
 	timer = (duration) => {
 		let start = Date.now(),
@@ -113,7 +130,16 @@ export default class Timer extends Component {
 				<h2 className="my-8 text-4xl">
 					Tomato count: {this.props.tomatoCount}
 				</h2>
-				<div id="tomatoRow"></div>
+				<div id="tomatoRow" className="flex">
+					{this.state.tomatoArray.map((element, index) => (
+						<img
+							className="tomatoImage"
+							key={index}
+							alt="tomato"
+							src="./assets/images/tomato1.jpg"
+						/>
+					))}
+				</div>
 			</div>
 		);
 	}

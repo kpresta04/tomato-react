@@ -15,7 +15,7 @@ function App() {
 	}, []);
 
 	return (
-		<div className="App bg-gray-100 mt-5">
+		<div className="App mt-5">
 			<Timer
 				running={running}
 				runningSet={runningSet}

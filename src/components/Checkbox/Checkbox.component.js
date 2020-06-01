@@ -1,5 +1,5 @@
 import React from "react";
-import FormGroup from "@material-ui/core/FormGroup";
+
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 
@@ -19,6 +19,7 @@ export default function CheckboxLabels() {
 		<FormControlLabel
 			control={
 				<Checkbox
+					id="auto-restart"
 					checked={state.checkedB}
 					onChange={handleChange}
 					name="checkedB"
