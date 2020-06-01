@@ -78,12 +78,12 @@ export default class Timer extends Component {
 		return (
 			<div className="mx-auto text-center">
 				<h1 id="timer">{this.state.formatted_time}</h1>
-				<div className="flex justify-center">
+				<div className="flex justify-center my-8">
 					<TextFieldOutlined handleMinutesChange={this.handleMinutesChange} />
 
 					<Checkbox />
 				</div>
-				<div id="buttons" className="mt-12">
+				<div id="buttons">
 					<button
 						onClick={this.handleStopStart}
 						className="bg-teal-400 hover:bg-teal-600 text-white font-bold py-3 px-5 mx-4 text-2xl"
