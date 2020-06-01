@@ -38,6 +38,19 @@ export default class Timer extends Component {
 		this.setState({ formatted_time: this.timeString });
 		document.title = `Tomato Tracker!`;
 	};
+	stopTimer = () => {
+		clearInterval(this.interv);
+		this.props.runningSet(false);
+	};
+	playSound = () => {
+		document.querySelector("#doorbell").play();
+	};
+
+	onCompletion = () => {
+		this.playSound();
+		this.stopTimer();
+		this.props.tomatoCountSet((this.props.tomatoCount += 1));
+	};
 	timer = (duration) => {
 		let start = Date.now(),
 			diff,
@@ -100,6 +113,7 @@ export default class Timer extends Component {
 				<h2 className="my-8 text-4xl">
 					Tomato count: {this.props.tomatoCount}
 				</h2>
+				<div id="tomatoRow"></div>
 			</div>
 		);
 	}

@@ -50,3 +50,7 @@ code {
 ::-webkit-scrollbar-thumb:hover {
 	background: #555;
 }
+.tomatoImage {
+	height: 5em;
+	width: 5em;
+}
