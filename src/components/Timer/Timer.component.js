@@ -130,7 +130,7 @@ export default class Timer extends Component {
 				<h2 className="my-8 text-4xl">
 					Tomato count: {this.props.tomatoCount}
 				</h2>
-				<div id="tomatoRow" className="flex flex-wrap">
+				<div id="tomatoRow" className="flex flex-wrap justify-center">
 					{this.state.tomatoArray.map((element, index) => (
 						<img
 							className="tomatoImage"
